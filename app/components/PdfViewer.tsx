@@ -11,17 +11,15 @@ import FloatingToolbar from "./FloatingToolbar";
 import SignaturePad from "react-signature-canvas";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { saveAs } from "file-saver";
 
 export default function PdfViewer() {
-  const [activeTool, setActiveTool] = useState<string | null>(null);
   const uploadedFile = useSelector(
     (state: RootState) => state.pdf.uploadedFile
   );
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [annotations, setAnnotations] = useState<any[]>([]);
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
-  const signaturePadRef = useRef<any>(null);
+  const signaturePadRef = useRef<SignaturePad | null>(null);
   const [isSigning, setIsSigning] = useState(false);
 
   useEffect(() => {
@@ -93,76 +91,6 @@ export default function PdfViewer() {
       setIsSigning(false);
     }
   };
-
-  // const exportPDF = async () => {
-  //   const pdfContainer = document.querySelector(
-  //     ".border.relative"
-  //   ) as HTMLElement | null;
-  //   if (!pdfContainer) return;
-
-  //   const canvas = await html2canvas(pdfContainer);
-  //   const imgData = canvas.toDataURL("image/png");
-  //   const pdf = new jsPDF({
-  //     orientation: "portrait",
-  //     unit: "px",
-  //     format: [canvas.width, canvas.height],
-  //   });
-  //   pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
-  //   pdf.save("annotated-document.pdf");
-  // };
-
-  // const exportPDF = async () => {
-  //   const pdfContainer = document.querySelector(
-  //     ".pdf-container"
-  //   ) as HTMLElement | null;
-
-  //   if (!pdfContainer) {
-  //     console.error("PDF container not found.");
-  //     return;
-  //   }
-
-  //   // Convert all styles to supported formats before rendering
-  //   const fixUnsupportedColors = (element: HTMLElement) => {
-  //     const computedStyle = window.getComputedStyle(element);
-
-  //     // Convert and apply only necessary styles
-  //     ["color", "backgroundColor", "borderColor"].forEach((styleProp) => {
-  //       const styleValue = computedStyle.getPropertyValue(styleProp);
-  //       if (styleValue.includes("oklch")) {
-  //         element.style.setProperty(styleProp, "rgb(0, 0, 0)", "important"); // Replace with black
-  //       }
-  //     });
-
-  //     // Ensure transparency does not interfere
-  //     if (parseFloat(computedStyle.opacity) < 0.1) {
-  //       element.style.opacity = "1";
-  //     }
-  //   };
-
-  //   // Apply fixes to every child element
-  //   pdfContainer.querySelectorAll("*").forEach((el) => {
-  //     fixUnsupportedColors(el as HTMLElement);
-  //   });
-
-  //   // Generate PDF
-  //   try {
-  //     const canvas = await html2canvas(pdfContainer, {
-  //       useCORS: true,
-  //       backgroundColor: "#fff",
-  //       scale: 2,
-  //     });
-
-  //     const imgData = canvas.toDataURL("image/png");
-  //     const pdf = new jsPDF("p", "mm", "a4");
-  //     const imgWidth = 210;
-  //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-  //     pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-  //     pdf.save("annotated-document.pdf");
-  //   } catch (error) {
-  //     console.error("Error generating PDF:", error);
-  //   }
-  // };
 
   const exportToPDF = async () => {
     const pdfContainer = document.querySelector(

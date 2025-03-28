@@ -59,7 +59,7 @@ export default function UploadComponent() {
       </svg>
 
       {/* Drag & Drop Text */}
-      <p className="text-gray-600">
+      <p className="text-gray-100 ">
         Drag & Drop a PDF file here or{" "}
         <span className="text-orange-500 font-semibold cursor-pointer">
           Browse
