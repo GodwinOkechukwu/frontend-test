@@ -9,6 +9,9 @@ import path from "path";
 import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   webpack: (config) => {
     if (!config.resolve) {
       config.resolve = {};

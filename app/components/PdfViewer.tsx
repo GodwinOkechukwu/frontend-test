@@ -11,6 +11,7 @@ import FloatingToolbar from "./FloatingToolbar";
 import SignaturePad from "react-signature-canvas";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import Image from "next/image";
 
 export default function PdfViewer() {
   const uploadedFile = useSelector(
@@ -129,7 +130,7 @@ export default function PdfViewer() {
       styleTag.innerHTML = `
         * {
           color: rgb(0, 0, 0) !important;
-          background-color: rgb(255, 255, 255) !important;
+          background-color: rgba(0, 0, 0, 0) !important;
           border-color: rgb(0, 0, 0) !important;
         }
       `;
@@ -138,7 +139,7 @@ export default function PdfViewer() {
       // Render the PDF container to canvas
       const canvas = await html2canvas(pdfContainer, {
         useCORS: true,
-        backgroundColor: "#fff",
+        backgroundColor: "#000",
         scale: 2,
       });
 
@@ -159,7 +160,7 @@ export default function PdfViewer() {
   };
 
   return (
-    <div className="pdf-container relative flex justify-center items-center min-h-screen bg-gray-100 p-4">
+    <div className="pdf-container relative flex justify-center items-center min-h-[500px] bg-[#171717] p-4">
       <div className="bg-white shadow-xl rounded-lg p-6 w-full max-w-4xl relative">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">
           📄 PDF Viewer
@@ -189,7 +190,7 @@ export default function PdfViewer() {
                 </span>
               )}
               {anno.type === "signature" && (
-                <img
+                <Image
                   src={anno.image}
                   alt="Signature"
                   className="absolute max-w-full h-auto"
