@@ -13,8 +13,11 @@ import domtoimage from "dom-to-image";
 import jsPDF from "jspdf";
 import Image from "next/image";
 import "react-toastify/dist/ReactToastify.css";
+import { pdfjs } from "react-pdf";
 
 export default function PdfViewer() {
+  pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+
   const uploadedFile = useSelector(
     (state: RootState) => state.pdf.uploadedFile
   );
