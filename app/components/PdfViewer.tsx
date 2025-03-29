@@ -224,7 +224,7 @@ export default function PdfViewer() {
   return (
     <div className="pdf-container relative flex justify-center items-center min-h-[500px] bg-[#171717] p-4">
       <div className="bg-white shadow-xl rounded-lg p-6 w-full max-w-4xl relative">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+        <h2 className="text-xl font-semibold text-gray-800 mb-5">
           📄 PDF Viewer
         </h2>
         <div className="border border-gray-300 rounded-lg overflow-hidden shadow-sm relative">
@@ -235,7 +235,7 @@ export default function PdfViewer() {
           {annotations.map((anno) => (
             <div
               key={anno.id}
-              className={`absolute bg-yellow-300 opacity-50 pointer-events-none ${
+              className={`absolute bg-yellow-300 opacity-50 pointer-events-none  ${
                 anno.type === "underline" ? "h-1" : "h-full"
               }`}
               style={{
