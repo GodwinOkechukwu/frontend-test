@@ -228,7 +228,7 @@ export default function PdfViewer() {
             <button
               onClick={() => setIsSigning(false)}
               className="mt-2 p-2 bg-red-400 text-white rounded">
-              Cancel
+              cancel
             </button>
           </div>
         </div>
