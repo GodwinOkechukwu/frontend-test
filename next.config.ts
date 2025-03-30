@@ -5,7 +5,6 @@
 // };
 
 // export default nextConfig;
-import path from "path";
 import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -20,11 +19,6 @@ const nextConfig: NextConfig = {
     if (!config.resolve.alias) {
       config.resolve.alias = {};
     }
-
-    config.resolve.alias["html2canvas"] = path.resolve(
-      process.cwd(),
-      "node_modules/html2canvas-pro"
-    );
 
     return config;
   },

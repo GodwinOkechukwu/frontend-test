@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { pdfjs } from "react-pdf";
 
 export default function PdfViewer() {
-  pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+  pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
 
   const uploadedFile = useSelector(
     (state: RootState) => state.pdf.uploadedFile
@@ -232,7 +232,7 @@ export default function PdfViewer() {
         </h2>
         <div className="border border-gray-300 rounded-lg overflow-hidden shadow-sm relative">
           <Worker
-            workerUrl={`https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js`}>
+            workerUrl={`https://unpkg.com/pdfjs-dist@3.10.111/build/pdf.worker.min.js`}>
             <Viewer fileUrl={pdfUrl} plugins={[defaultLayoutPluginInstance]} />
           </Worker>
           {annotations.map((anno) => (
