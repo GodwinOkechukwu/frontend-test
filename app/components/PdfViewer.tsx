@@ -9,8 +9,6 @@ import { RootState } from "@/app/redux/store";
 import { useEffect, useState, useRef } from "react";
 import FloatingToolbar from "./FloatingToolbar";
 import SignaturePad from "react-signature-canvas";
-import domtoimage from "dom-to-image";
-import jsPDF from "jspdf";
 import Image from "next/image";
 import "react-toastify/dist/ReactToastify.css";
 import { pdfjs } from "react-pdf";
@@ -97,133 +95,6 @@ export default function PdfViewer() {
     }
   };
 
-  // const exportToPDF = async () => {
-  //   const pdfContainer = document.querySelector(
-  //     ".pdf-container"
-  //   ) as HTMLElement | null;
-
-  //   if (!pdfContainer) {
-  //     console.error("PDF container not found.");
-  //     return;
-  //   }
-
-  //   // Function to replace oklch colors
-  //   const fixUnsupportedColors = (element: HTMLElement) => {
-  //     const computedStyle = window.getComputedStyle(element);
-
-  //     ["color", "backgroundColor", "borderColor"].forEach((styleProp) => {
-  //       const styleValue = computedStyle.getPropertyValue(styleProp);
-  //       if (styleValue.includes("oklch")) {
-  //         element.style.setProperty(styleProp, "rgb(0, 0, 0)", "important"); // Convert to black
-  //       }
-  //     });
-
-  //     if (parseFloat(computedStyle.opacity) < 0.1) {
-  //       element.style.opacity = "1"; // Prevent transparency issues
-  //     }
-  //   };
-
-  //   // Apply color fixes to all elements inside the PDF container
-  //   pdfContainer
-  //     .querySelectorAll("*")
-  //     .forEach((el) => fixUnsupportedColors(el as HTMLElement));
-
-  //   try {
-  //     // Add a forced style override to prevent oklch usage
-  //     const styleTag = document.createElement("style");
-  //     styleTag.innerHTML = `
-  //       * {
-  //         color: rgb(0, 0, 0) !important;
-  //         background-color: rgba(0, 0, 0, 0) !important;
-  //         border-color: rgb(0, 0, 0) !important;
-  //       }
-  //     `;
-  //     pdfContainer.appendChild(styleTag);
-
-  //     // Render the PDF container to canvas
-  //     const canvas = await html2canvas(pdfContainer, {
-  //       useCORS: true,
-  //       backgroundColor: "#000",
-  //       scale: 2,
-  //     });
-
-  //     // Remove the injected style tag to restore original styles
-  //     pdfContainer.removeChild(styleTag);
-
-  //     // Convert canvas to an image
-  //     const imgData = canvas.toDataURL("image/png");
-  //     const pdf = new jsPDF("p", "mm", "a4");
-  //     const imgWidth = 210;
-  //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-  //     pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-  //     pdf.save("annotated-document.pdf");
-  //   } catch (error) {
-  //     console.error("Error generating PDF:", error);
-  //   }
-  // };
-
-  const exportToPDF = async () => {
-    const pdfContainer = document.querySelector(
-      ".pdf-container"
-    ) as HTMLElement | null;
-
-    if (!pdfContainer) {
-      console.error("PDF container not found.");
-      return;
-    }
-
-    // Function to fix unsupported oklch colors
-    const fixUnsupportedColors = (element: HTMLElement) => {
-      const computedStyle = window.getComputedStyle(element);
-
-      ["color", "backgroundColor", "borderColor"].forEach((styleProp) => {
-        const styleValue = computedStyle.getPropertyValue(styleProp);
-        if (styleValue.includes("oklch")) {
-          element.style.setProperty(styleProp, "rgb(0, 0, 0)", "important"); // Convert to black
-        }
-      });
-
-      if (parseFloat(computedStyle.opacity) < 0.1) {
-        element.style.opacity = "1"; // Prevent transparency issues
-      }
-    };
-
-    // Apply color fixes to all elements inside the PDF container
-    pdfContainer
-      .querySelectorAll("*")
-      .forEach((el) => fixUnsupportedColors(el as HTMLElement));
-
-    try {
-      // Add a forced style override to prevent oklch usage
-      const styleTag = document.createElement("style");
-      styleTag.innerHTML = `
-      * {
-        color: rgb(0, 0, 0) !important;
-        background-color: rgba(0, 0, 0, 0) !important;
-        border-color: rgb(0, 0, 0) !important;
-      }
-    `;
-      pdfContainer.appendChild(styleTag);
-
-      // Convert HTML to image using dom-to-image
-      const imgData = await domtoimage.toPng(pdfContainer);
-
-      // Remove the injected style tag after conversion
-      pdfContainer.removeChild(styleTag);
-
-      // Generate and save the PDF
-      const pdf = new jsPDF("p", "mm", "a4");
-      const imgWidth = 210;
-      const imgHeight = 297; // A4 size
-
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("annotated-document.pdf");
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    }
-  };
-
   return (
     <div className="pdf-container relative flex justify-center items-center min-h-[500px] bg-[#171717] p-4">
       <div className="bg-white shadow-xl rounded-lg p-6 w-full max-w-4xl relative">
@@ -265,11 +136,6 @@ export default function PdfViewer() {
             </div>
           ))}
         </div>
-        <button
-          onClick={exportToPDF}
-          className="mt-4 p-2 cursor-pointer bg-blue-500 text-white rounded">
-          Export PDF
-        </button>
       </div>
       <FloatingToolbar
         onHighlight={() => handleTextSelection("highlight")}
